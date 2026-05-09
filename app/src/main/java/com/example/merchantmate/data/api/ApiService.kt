@@ -9,6 +9,7 @@ import com.example.merchantmate.data.model.ProductRequest
 import com.example.merchantmate.data.model.ProfileRequest
 import com.example.merchantmate.data.model.TodayInsights
 import com.example.merchantmate.data.model.Transaction
+import com.example.merchantmate.data.model.WeeklySales
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -59,4 +60,7 @@ interface ApiService {
 
     @GET("api/transactions")
     suspend fun getTransactions(): Response<ApiResponse<List<Transaction>>>
+
+    @GET("api/dashboard/weekly-sales")
+    suspend fun getWeeklySales(): ApiResponse<List<WeeklySales>>
 }

@@ -10,6 +10,7 @@ import com.example.merchantmate.data.model.ProductRequest
 import com.example.merchantmate.data.model.ProfileRequest
 import com.example.merchantmate.data.model.TodayInsights
 import com.example.merchantmate.data.model.Transaction
+import com.example.merchantmate.data.model.WeeklySales
 
 class ProductRepository(
     private val apiService: ApiService
@@ -116,5 +117,9 @@ class ProductRepository(
         }
 
         throw Exception(response.errorBody()?.string() ?: "Failed to load transactions")
+    }
+
+    suspend fun getWeeklySales(): ApiResponse<List<WeeklySales>> {
+        return apiService.getWeeklySales()
     }
 }

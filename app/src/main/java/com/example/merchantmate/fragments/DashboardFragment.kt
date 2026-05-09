@@ -15,10 +15,16 @@ import com.example.merchantmate.data.model.LowStockInsight
 import com.example.merchantmate.data.model.MerchantProfile
 import com.example.merchantmate.data.model.RecentTransaction
 import com.example.merchantmate.data.model.TodayInsights
+import com.example.merchantmate.data.model.WeeklySales
 import com.example.merchantmate.data.repository.ProductRepository
 import com.example.merchantmate.databinding.FragmentDashboardBinding
 import com.example.merchantmate.ui.products.ProductViewModelFactory
 import com.example.merchantmate.utils.UiState
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.google.firebase.auth.FirebaseAuth
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -34,6 +40,7 @@ class DashboardFragment : Fragment() {
 
     private var dashboardLoaded = false
     private var insightsLoaded = false
+    private var weeklySalesLoaded = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,6 +60,7 @@ class DashboardFragment : Fragment() {
         observeProfile()
         observeDashboardSummary()
         observeTodayInsights()
+        observeWeeklySales()
 
 
         productViewModel.loadProfile()
@@ -93,11 +101,13 @@ class DashboardFragment : Fragment() {
     private fun refreshDashboard() {
         dashboardLoaded = false
         insightsLoaded = false
+        weeklySalesLoaded = false
 
         binding.swipeRefreshDashboard.isRefreshing = true
 
         productViewModel.loadDashboardSummary()
         productViewModel.loadTodayInsights()
+        productViewModel.loadWeeklySales()
     }
 
     private fun observeDashboardSummary() {
@@ -168,8 +178,76 @@ class DashboardFragment : Fragment() {
         }
     }
 
+    private fun observeWeeklySales() {
+        productViewModel.weeklySalesState.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is UiState.Loading -> {
+                    weeklySalesLoaded = false
+                }
+
+                is UiState.Success -> {
+                    weeklySalesLoaded = true
+                    renderWeeklySalesChart(state.data)
+                    stopRefreshIfComplete()
+                }
+
+                is UiState.Error -> {
+                    weeklySalesLoaded = true
+                    binding.lineChartWeeklySales.clear()
+                    stopRefreshIfComplete()
+                    Toast.makeText(requireContext(), state.message, Toast.LENGTH_LONG).show()
+                }
+
+                else -> {}
+            }
+        }
+    }
+
+    private fun renderWeeklySalesChart(weeklySales: List<WeeklySales>) {
+        if (weeklySales.isEmpty()) {
+            binding.lineChartWeeklySales.clear()
+            return
+        }
+
+        val entries = weeklySales.mapIndexed { index, item ->
+            Entry(index.toFloat(), item.revenue.toFloat())
+        }
+
+        val dataSet = LineDataSet(entries, "Revenue").apply {
+            lineWidth = 2.5f
+            circleRadius = 4f
+            valueTextSize = 10f
+            mode = LineDataSet.Mode.CUBIC_BEZIER
+            setDrawFilled(false)
+        }
+
+        binding.lineChartWeeklySales.apply {
+            data = LineData(dataSet)
+
+            description.isEnabled = false
+            legend.isEnabled = true
+
+            xAxis.valueFormatter = IndexAxisValueFormatter(
+                weeklySales.map { it.day }
+            )
+            xAxis.position = XAxis.XAxisPosition.BOTTOM
+            xAxis.granularity = 1f
+            xAxis.setDrawGridLines(false)
+
+            axisRight.isEnabled = false
+            axisLeft.axisMinimum = 0f
+
+            setTouchEnabled(true)
+            setPinchZoom(false)
+            setScaleEnabled(false)
+
+            animateX(800)
+            invalidate()
+        }
+    }
+
     private fun stopRefreshIfComplete() {
-        if (dashboardLoaded && insightsLoaded) {
+        if (dashboardLoaded && insightsLoaded && weeklySalesLoaded) {
             binding.swipeRefreshDashboard.isRefreshing = false
         }
     }

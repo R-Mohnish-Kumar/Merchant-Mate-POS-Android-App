@@ -13,6 +13,7 @@ import com.example.merchantmate.data.model.ProductRequest
 import com.example.merchantmate.data.model.ProfileRequest
 import com.example.merchantmate.data.model.TodayInsights
 import com.example.merchantmate.data.model.Transaction
+import com.example.merchantmate.data.model.WeeklySales
 import com.example.merchantmate.data.repository.ProductRepository
 import com.example.merchantmate.utils.UiState
 import kotlinx.coroutines.launch
@@ -41,6 +42,9 @@ class ProductViewModel(
 
     private val _cartItems = MutableLiveData<Map<String, CheckoutItem>>(emptyMap())
     val cartItems: LiveData<Map<String, CheckoutItem>> = _cartItems
+
+    private val _weeklySalesState = MutableLiveData<UiState<List<WeeklySales>>>()
+    val weeklySalesState: LiveData<UiState<List<WeeklySales>>> = _weeklySalesState
 
     fun loadProducts() {
         viewModelScope.launch {
@@ -297,5 +301,26 @@ class ProductViewModel(
         loadDashboardSummary()
         loadTodayInsights()
         loadTransactions()
+    }
+
+    fun loadWeeklySales() {
+        viewModelScope.launch {
+            _weeklySalesState.value = UiState.Loading
+
+            try {
+                val response = repository.getWeeklySales()
+
+                if (response.success && response.data != null) {
+                    _weeklySalesState.value = UiState.Success(response.data)
+                } else {
+                    _weeklySalesState.value =
+                        UiState.Error(response.message ?: "Failed to load weekly sales")
+                }
+
+            } catch (e: Exception) {
+                _weeklySalesState.value =
+                    UiState.Error(e.message ?: "Something went wrong")
+            }
+        }
     }
 }
