@@ -15,6 +15,10 @@
         android:theme="@style/Theme.MerchantMate.Starting"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".fragments.ReceiptDetailsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MerchantMate"/>
+        <activity
             android:name=".fragments.CartActivity"
             android:exported="false"
             android:theme="@style/Theme.MerchantMate" />
@@ -31,11 +35,11 @@
         <activity
             android:name=".auth.LoginActivity"
             android:exported="false"
-            android:theme="@style/Theme.MerchantMate"/>
+            android:theme="@style/Theme.MerchantMate" />
         <activity
             android:name=".ui.MainActivity"
             android:exported="false"
-            android:theme="@style/Theme.MerchantMate"/>
+            android:theme="@style/Theme.MerchantMate" />
     </application>
 
 </manifest>

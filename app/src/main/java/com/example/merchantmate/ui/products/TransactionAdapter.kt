@@ -11,7 +11,7 @@ import java.util.Locale
 import com.example.merchantmate.data.model.Transaction
 import com.example.merchantmate.data.model.TransactionItem
 
-class TransactionAdapter : RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder>() {
+class TransactionAdapter(private val onTransactionClick:(Transaction) -> Unit) : RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder>() {
 
     private val transactions = mutableListOf<Transaction>()
 
@@ -40,6 +40,7 @@ class TransactionAdapter : RecyclerView.Adapter<TransactionAdapter.TransactionVi
 
             binding.tvTransactionDate.text = formatFirestoreTimestamp(transaction.createdAt)
             binding.tvTransactionItems.text = buildItemsPreview(transaction.items)
+            binding.transactionCardRoot.setOnClickListener { onTransactionClick(transaction) }
         }
     }
 

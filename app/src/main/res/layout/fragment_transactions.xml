@@ -48,6 +48,17 @@
             android:textColor="#6B7280"
             android:textSize="15sp"
             android:visibility="gone" />
+        <EditText
+            android:id="@+id/etTransactionSearch"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_margin="16dp"
+            android:hint="Search by receipt number or total..."
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:background="@drawable/bg_input_rounded"
+            android:inputType="text"
+            android:singleLine="true" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvTransactions"

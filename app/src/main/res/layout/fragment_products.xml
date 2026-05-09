@@ -56,6 +56,31 @@
             android:textColor="#6B7280"
             android:textSize="15sp"
             android:visibility="gone" />
+        <LinearLayout
+            android:id="@+id/productFilterContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <EditText
+                android:id="@+id/etProductSearch"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:hint="Search products..."
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:background="@drawable/bg_input_rounded"
+                android:inputType="text"
+                android:singleLine="true" />
+
+            <Spinner
+                android:id="@+id/spinnerCategoryFilter"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="12dp" />
+
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvProducts"

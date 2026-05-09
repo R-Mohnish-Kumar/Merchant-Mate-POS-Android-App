@@ -1,6 +1,8 @@
 package com.example.merchantmate.fragments
 
+import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,11 +12,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.merchantmate.ProductViewModel
 import com.example.merchantmate.data.api.ApiClient
+import com.example.merchantmate.data.model.Transaction
 import com.example.merchantmate.data.repository.ProductRepository
 import com.example.merchantmate.databinding.FragmentTransactionsBinding
 import com.example.merchantmate.ui.products.ProductViewModelFactory
 import com.example.merchantmate.ui.products.TransactionAdapter
 import com.example.merchantmate.utils.UiState
+import android.text.TextWatcher
+import com.google.gson.Gson
 
 class TransactionsFragment : Fragment() {
 
@@ -23,6 +28,9 @@ class TransactionsFragment : Fragment() {
 
     private lateinit var productViewModel: ProductViewModel
     private lateinit var transactionAdapter: TransactionAdapter
+
+    private var allTransactions: List<Transaction> = emptyList()
+    private var transactionSearchQuery: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,6 +46,7 @@ class TransactionsFragment : Fragment() {
         setupRecyclerView()
         setupSwipeRefresh()
         observeTransactions()
+        setupTransactionSearch()
 
         productViewModel.loadTransactions()
     }
@@ -53,7 +62,13 @@ class TransactionsFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        transactionAdapter = TransactionAdapter()
+        transactionAdapter = TransactionAdapter{transaction ->
+            val transactionJson = Gson().toJson(transaction)
+            val intent = Intent(requireContext(), ReceiptDetailsActivity::class.java)
+            intent.putExtra("transaction_json",transactionJson)
+            startActivity(intent)
+
+        }
 
         binding.rvTransactions.apply {
             layoutManager = LinearLayoutManager(requireContext())
@@ -82,6 +97,7 @@ class TransactionsFragment : Fragment() {
 
                     val transactions = state.data
                     transactionAdapter.submitList(transactions)
+                    handleTransactionsSuccess(transactions)
 
                     binding.tvTransactionsEmpty.visibility =
                         if (transactions.isEmpty()) View.VISIBLE else View.GONE
@@ -95,6 +111,47 @@ class TransactionsFragment : Fragment() {
                 else -> {}
             }
         }
+    }
+
+    private fun handleTransactionsSuccess(transactions: List<Transaction>) {
+        allTransactions = transactions
+        applyTransactionFilter()
+    }
+
+    private fun setupTransactionSearch() {
+        binding.etTransactionSearch.addTextChangedListener(object : TextWatcher {
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                transactionSearchQuery = s?.toString()?.trim().orEmpty()
+                applyTransactionFilter()
+            }
+
+            override fun afterTextChanged(s: Editable?) = Unit
+        })
+    }
+
+    private fun applyTransactionFilter() {
+        val filteredTransactions = allTransactions.filter { transaction ->
+
+            val receiptMatch = transaction.receiptId.contains(
+                transactionSearchQuery,
+                ignoreCase = true
+            )
+
+            val totalMatch = transaction.total.toString().contains(
+                transactionSearchQuery,
+                ignoreCase = true
+            )
+
+            receiptMatch || totalMatch
+        }
+
+        transactionAdapter.submitList(filteredTransactions)
+
+        binding.tvTransactionsEmpty.visibility =
+            if (filteredTransactions.isEmpty()) View.VISIBLE else View.GONE
     }
 
     override fun onDestroyView() {

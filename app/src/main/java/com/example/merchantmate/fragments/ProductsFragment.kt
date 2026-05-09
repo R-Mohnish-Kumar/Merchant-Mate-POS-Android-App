@@ -1,10 +1,14 @@
 package com.example.merchantmate.fragments
 
+import android.R
 import android.app.AlertDialog
 import android.os.Bundle
+import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -19,6 +23,7 @@ import com.example.merchantmate.databinding.DialogAddProductBinding
 import com.example.merchantmate.databinding.FragmentProductsBinding
 import com.example.merchantmate.ui.products.ProductViewModelFactory
 import com.example.merchantmate.utils.UiState
+import android.text.TextWatcher
 
 class ProductsFragment : Fragment() {
 
@@ -27,6 +32,10 @@ class ProductsFragment : Fragment() {
 
     private lateinit var productViewModel: ProductViewModel
     private lateinit var productAdapter: ProductAdapter
+
+    private var allProducts: List<Product> = emptyList()
+    private var selectedCategory: String = "All"
+    private var searchQuery: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,6 +51,7 @@ class ProductsFragment : Fragment() {
         setupRecyclerView()
         setupClickListeners()
         observeProducts()
+        setupProductSearch()
 
         productViewModel.loadProducts()
     }
@@ -54,6 +64,83 @@ class ProductsFragment : Fragment() {
             requireActivity(),
             factory
         )[ProductViewModel::class.java]
+    }
+
+    private fun handleProductsSuccess(products: List<Product>) {
+        allProducts = products
+
+        setupCategoryFilter(products)
+        applyProductFilters()
+    }
+
+    private fun setupCategoryFilter(products: List<Product>) {
+        val categories = mutableListOf("All")
+
+        categories.addAll(
+            products.map { it.category }
+                .filter { it.isNotBlank() }
+                .distinct()
+                .sorted()
+        )
+
+        val adapter = ArrayAdapter(
+            requireContext(),
+            R.layout.simple_spinner_item,
+            categories
+        )
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spinnerCategoryFilter.adapter = adapter
+
+        binding.spinnerCategoryFilter.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    selectedCategory = categories[position]
+                    applyProductFilters()
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) = Unit
+            }
+    }
+
+    private fun setupProductSearch() {
+        binding.etProductSearch.addTextChangedListener(object : TextWatcher {
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                searchQuery = s?.toString()?.trim().orEmpty()
+                applyProductFilters()
+            }
+
+            override fun afterTextChanged(s: Editable?) = Unit
+        })
+    }
+
+    private fun applyProductFilters() {
+        val filteredProducts = allProducts.filter { product ->
+
+            val matchesSearch = product.name.contains(
+                searchQuery,
+                ignoreCase = true
+            )
+
+            val matchesCategory =
+                selectedCategory == "All" ||
+                        product.category.equals(selectedCategory, ignoreCase = true)
+
+            matchesSearch && matchesCategory
+        }
+
+        productAdapter.submitList(filteredProducts)
+
+        binding.tvProductsEmpty.visibility =
+            if (filteredProducts.isEmpty()) View.VISIBLE else View.GONE
     }
 
     private fun setupRecyclerView() {
@@ -104,6 +191,7 @@ class ProductsFragment : Fragment() {
 
                     val products = state.data
                     productAdapter.submitList(products)
+                    handleProductsSuccess(products)
 
                     binding.tvProductsEmpty.visibility =
                         if (products.isEmpty()) View.VISIBLE else View.GONE

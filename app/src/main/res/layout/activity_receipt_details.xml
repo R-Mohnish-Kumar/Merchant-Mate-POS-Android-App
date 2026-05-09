@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F7F9FC">
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
+    <ScrollView
+        android:id="@+id/receiptContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Receipt Details"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:textColor="#172033" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                android:background="@drawable/bg_login_card"
+                android:padding="20dp">
+
+                <TextView
+                    android:id="@+id/tvReceiptId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="RCPT-001"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="#172033" />
+
+                <TextView
+                    android:id="@+id/tvPaymentMethod"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="CARD"
+                    android:textSize="14sp"
+                    android:textColor="#667085"
+                    android:layout_marginTop="8dp" />
+
+                <TextView
+                    android:id="@+id/tvStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="COMPLETED"
+                    android:textSize="14sp"
+                    android:textColor="#667085"
+                    android:layout_marginTop="4dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#EAECF0"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginBottom="18dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Items"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    android:textColor="#172033" />
+
+                <TextView
+                    android:id="@+id/tvReceiptItems"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Items appear here"
+                    android:textSize="15sp"
+                    android:textColor="#344054"
+                    android:layout_marginTop="12dp"
+                    android:lineSpacingExtra="4dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#EAECF0"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginBottom="18dp" />
+
+                <TextView
+                    android:id="@+id/tvGrandTotal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="£0.00"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textColor="#3066BE"
+                    android:gravity="end" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnSavePdf"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_marginTop="20dp"
+                android:text="Save Receipt as PDF"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:background="@drawable/bg_primary_button" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</FrameLayout>
