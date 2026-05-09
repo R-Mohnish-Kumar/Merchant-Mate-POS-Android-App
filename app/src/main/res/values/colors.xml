@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="merchant_splash_bg">#F7F9FC</color>
+    <color name="merchant_primary">#3066BE</color>
+    <color name="merchant_primary_dark">#244F99</color>
+    <color name="merchant_bg">#F7F9FC</color>
+</resources>

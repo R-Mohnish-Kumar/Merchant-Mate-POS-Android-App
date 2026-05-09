@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "793255704589",
+    "project_id": "merchantmate-7b3d0",
+    "storage_bucket": "merchantmate-7b3d0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:793255704589:android:0c5f0dc9bb3adccbaf7d44",
+        "android_client_info": {
+          "package_name": "com.example.merchantmate"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbtaMIPWrXnSOat0VErpYQM1EOjlg7vhs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
