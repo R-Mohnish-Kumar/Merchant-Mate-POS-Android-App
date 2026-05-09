@@ -44,6 +44,7 @@ The application follows a client-server architecture using a native Android fron
 ### Product Management
 
 - View all products
+- Search and filter products
 - Add new products
 - Update product details
 - Delete products
@@ -63,9 +64,18 @@ The application follows a client-server architecture using a native Android fron
 ### Receipts and Transactions
 
 - View completed transactions
+- Search by Receipt number or total bill amount
 - Receipt ID generated for every checkout
 - Display total amount, payment method, status, and date
 - Receipt-style transaction history screen
+
+### PDF Receipt Generation
+
+Merchants can save receipt details as a PDF file locally on the device. This was implemented using Android’s `PdfDocument`, allowing the app to generate a simple printable receipt without requiring an external PDF library.
+
+### Weekly Sales Line Graph
+
+The Dashboard now includes a weekly sales line graph using MPAndroidChart. It visualises daily revenue for the current week, helping merchants quickly understand sales performance trends across the week.
 
 ### Smart Insights
 
