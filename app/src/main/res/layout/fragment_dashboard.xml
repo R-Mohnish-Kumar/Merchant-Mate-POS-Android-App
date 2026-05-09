@@ -5,317 +5,378 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#F7F9FC"
-        android:fillViewport="true">
+        android:background="@drawable/bg_dashboard_header_gradient"
+        android:orientation="vertical">
 
+        <!-- Top Purple Header -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="120dp"
             android:orientation="vertical"
-            android:padding="20dp">
+            android:paddingStart="24dp"
+            android:paddingTop="42dp"
+            android:paddingEnd="24dp">
 
             <TextView
                 android:id="@+id/tvGreeting"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Hi, Merchant 👋"
-                android:textColor="#111827"
-                android:textSize="26sp"
+                android:textColor="#FFFFFF"
+                android:textSize="28sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvSubtitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="6dp"
                 android:text="Here is your store performance today"
-                android:textColor="#6B7280"
+                android:textColor="#DDD6FE"
                 android:textSize="14sp" />
 
-            <LinearLayout
-                android:id="@+id/cardDashboardSummary"
+        </LinearLayout>
+
+        <!-- White Rounded Dashboard Sheet -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_dashboard_sheet_top"
+            android:orientation="vertical">
+
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="22dp"
-                android:layout_marginHorizontal="5dp"
-                android:background="@drawable/bg_card"
-                android:elevation="2dp"
-                android:orientation="vertical"
-                android:padding="18dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Dashboard Summary"
-                    android:textColor="#111827"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <GridLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
-                    android:columnCount="2"
-                    android:rowCount="2">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_columnWeight="1"
-                        android:orientation="vertical"
-                        android:padding="8dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Today Revenue"
-                            android:textColor="#6B7280"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:id="@+id/tvTodayRevenue"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="£0.00"
-                            android:textColor="#111827"
-                            android:textSize="20sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_columnWeight="1"
-                        android:orientation="vertical"
-                        android:padding="8dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Orders"
-                            android:textColor="#6B7280"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:id="@+id/tvOrdersCount"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="0"
-                            android:textColor="#111827"
-                            android:textSize="20sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_columnWeight="1"
-                        android:orientation="vertical"
-                        android:padding="8dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Avg Order"
-                            android:textColor="#6B7280"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:id="@+id/tvAverageOrderValue"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="£0.00"
-                            android:textColor="#111827"
-                            android:textSize="20sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_columnWeight="1"
-                        android:orientation="vertical"
-                        android:padding="8dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Best Seller"
-                            android:textColor="#6B7280"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:id="@+id/tvBestSeller"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="No sales yet"
-                            android:textColor="#111827"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-
-                </GridLayout>
-
-            </LinearLayout>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardWeeklySales"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="3dp"
-                app:cardUseCompatPadding="true">
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:fillViewport="true"
+                android:paddingStart="16dp"
+                android:paddingTop="15dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="90dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp"
-                    android:background="#FFFFFF">
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tvWeeklySalesTitle"
+                    <!-- Dashboard Summary Card -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardDashboardSummary"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Weekly Sales"
-                        android:textColor="#172033"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+                        app:cardBackgroundColor="#FFFFFF"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="3dp"
+                        app:cardUseCompatPadding="true">
 
-                    <TextView
-                        android:id="@+id/tvWeeklySalesSubtitle"
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="18dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Dashboard Summary"
+                                android:textColor="#111827"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+
+                            <GridLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="14dp"
+                                android:columnCount="2">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_columnWeight="1"
+                                    android:orientation="vertical"
+                                    android:padding="10dp">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Today Revenue"
+                                        android:textColor="#6B7280"
+                                        android:textSize="12sp" />
+
+                                    <TextView
+                                        android:id="@+id/tvTodayRevenue"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="4dp"
+                                        android:text="£0.00"
+                                        android:textColor="#2563EB"
+                                        android:textSize="22sp"
+                                        android:textStyle="bold" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_columnWeight="1"
+                                    android:orientation="vertical"
+                                    android:padding="10dp">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Orders"
+                                        android:textColor="#6B7280"
+                                        android:textSize="12sp" />
+
+                                    <TextView
+                                        android:id="@+id/tvOrdersCount"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="4dp"
+                                        android:text="0"
+                                        android:textColor="#111827"
+                                        android:textSize="22sp"
+                                        android:textStyle="bold" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_columnWeight="1"
+                                    android:orientation="vertical"
+                                    android:padding="10dp">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Avg Order"
+                                        android:textColor="#6B7280"
+                                        android:textSize="12sp" />
+
+                                    <TextView
+                                        android:id="@+id/tvAverageOrderValue"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="4dp"
+                                        android:text="£0.00"
+                                        android:textColor="#2563EB"
+                                        android:textSize="22sp"
+                                        android:textStyle="bold" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_columnWeight="1"
+                                    android:orientation="vertical"
+                                    android:padding="10dp">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Best Seller"
+                                        android:textColor="#6B7280"
+                                        android:textSize="12sp" />
+
+                                    <TextView
+                                        android:id="@+id/tvBestSeller"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="4dp"
+                                        android:text="No sales yet"
+                                        android:textColor="#111827"
+                                        android:textSize="16sp"
+                                        android:textStyle="bold" />
+
+                                </LinearLayout>
+
+                            </GridLayout>
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Weekly Sales Card -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardWeeklySales"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Revenue comparison for this week"
-                        android:textColor="#667085"
-                        android:textSize="13sp"
-                        android:layout_marginTop="4dp" />
+                        android:layout_marginTop="12dp"
+                        app:cardBackgroundColor="#FFFFFF"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="3dp"
+                        app:cardUseCompatPadding="true">
 
-                    <com.github.mikephil.charting.charts.LineChart
-                        android:id="@+id/lineChartWeeklySales"
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="18dp">
+
+                            <TextView
+                                android:id="@+id/tvWeeklySalesTitle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Weekly Sales"
+                                android:textColor="#172033"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvWeeklySalesSubtitle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="Revenue comparison for this week"
+                                android:textColor="#667085"
+                                android:textSize="13sp" />
+
+                            <com.github.mikephil.charting.charts.LineChart
+                                android:id="@+id/lineChartWeeklySales"
+                                android:layout_width="match_parent"
+                                android:layout_height="240dp"
+                                android:layout_marginTop="12dp" />
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Today Insights Card -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardTodayInsights"
                         android:layout_width="match_parent"
-                        android:layout_height="240dp"
-                        android:layout_marginTop="12dp" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        app:cardBackgroundColor="#FFFFFF"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="3dp"
+                        app:cardUseCompatPadding="true">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="18dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Today Insights"
+                                android:textColor="#111827"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvInsightMessage"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="12dp"
+                                android:text="Start selling to unlock smart insights."
+                                android:textColor="#374151"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/tvLowStockInsight"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="No low stock products found."
+                                android:textColor="#374151"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/tvRevenueComparison"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="Revenue comparison will appear after transactions."
+                                android:textColor="#374151"
+                                android:textSize="14sp" />
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Recent Transaction Card -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardRecentTransaction"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        app:cardBackgroundColor="#FFFFFF"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="3dp"
+                        app:cardUseCompatPadding="true">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="18dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Recent Transaction"
+                                android:textColor="#111827"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvRecentReceiptId"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="12dp"
+                                android:text="No recent transaction"
+                                android:textColor="#111827"
+                                android:textSize="15sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvRecentTransactionTotal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:text="£0.00"
+                                android:textColor="#2563EB"
+                                android:textSize="24sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvRecentTransactionPayment"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="-"
+                                android:textColor="#6B7280"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/tvRecentTransactionStatus"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="-"
+                                android:textColor="#6B7280"
+                                android:textSize="14sp" />
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
 
                 </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
-
-            <LinearLayout
-                android:id="@+id/cardTodayInsights"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
-                android:layout_marginHorizontal="5dp"
-                android:background="@drawable/bg_card"
-                android:elevation="2dp"
-                android:orientation="vertical"
-                android:padding="18dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Today Insights"
-                    android:textColor="#111827"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tvInsightMessage"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:text="Start selling to unlock smart insights."
-                    android:textColor="#374151"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tvLowStockInsight"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="No low stock products found."
-                    android:textColor="#374151"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tvRevenueComparison"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Revenue comparison will appear after transactions."
-                    android:textColor="#374151"
-                    android:textSize="14sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/cardRecentTransaction"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
-                android:layout_marginHorizontal="5dp"
-                android:layout_marginBottom="5dp"
-                android:background="@drawable/bg_card"
-                android:elevation="2dp"
-                android:orientation="vertical"
-                android:padding="18dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Recent Transaction"
-                    android:textColor="#111827"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tvRecentReceiptId"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:text="No recent transaction"
-                    android:textColor="#111827"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tvRecentTransactionTotal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:text="£0.00"
-                    android:textColor="#2563EB"
-                    android:textSize="22sp"
-                    android:textStyle="bold"
-                    />
-
-                <TextView
-                    android:id="@+id/tvRecentTransactionPayment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="-"
-                    android:textColor="#6B7280"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tvRecentTransactionStatus"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="-"
-                    android:textColor="#6B7280"
-                    android:textSize="14sp" />
-
-            </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
 
         </LinearLayout>
 
-    </ScrollView>
+    </LinearLayout>
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

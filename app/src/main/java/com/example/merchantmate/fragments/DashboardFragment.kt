@@ -1,5 +1,6 @@
 package com.example.merchantmate.fragments
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +21,7 @@ import com.example.merchantmate.data.repository.ProductRepository
 import com.example.merchantmate.databinding.FragmentDashboardBinding
 import com.example.merchantmate.ui.products.ProductViewModelFactory
 import com.example.merchantmate.utils.UiState
+import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -213,19 +215,31 @@ class DashboardFragment : Fragment() {
             Entry(index.toFloat(), item.revenue.toFloat())
         }
 
-        val dataSet = LineDataSet(entries, "Revenue").apply {
-            lineWidth = 2.5f
-            circleRadius = 4f
-            valueTextSize = 10f
+        val dataSet = LineDataSet(entries, "Revenue in £").apply {
+            color = Color.parseColor("#2563EB")
+            setCircleColor(Color.parseColor("#2563EB"))
+            valueTextColor = Color.parseColor("#111827")
+            lineWidth = 3f
+            circleRadius = 5f
             mode = LineDataSet.Mode.CUBIC_BEZIER
-            setDrawFilled(false)
+            setDrawFilled(true)
+            fillAlpha = 35
+            fillColor = Color.parseColor("#2563EB")
         }
 
         binding.lineChartWeeklySales.apply {
             data = LineData(dataSet)
 
             description.isEnabled = false
-            legend.isEnabled = true
+            legend.apply {
+                isEnabled = true
+                horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
+                verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
+                orientation = Legend.LegendOrientation.HORIZONTAL
+                setDrawInside(false)
+                textColor = Color.parseColor("#6B7280")
+                textSize = 12f
+            }
 
             xAxis.valueFormatter = IndexAxisValueFormatter(
                 weeklySales.map { it.day }

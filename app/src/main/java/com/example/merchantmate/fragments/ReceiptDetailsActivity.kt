@@ -47,14 +47,22 @@ class ReceiptDetailsActivity : AppCompatActivity() {
         bindReceiptDetails(transaction)
 
         binding.btnSavePdf.setOnClickListener {
-            val file = ReceiptPdfGenerator.generateReceiptPdf(this, transaction)
+            try {
+                val savedPath = ReceiptPdfGenerator.generateReceiptPdf(this, transaction)
 
-            Toast.makeText(
-                this,
-                "PDF saved: ${file.absolutePath}",
-                Toast.LENGTH_LONG
-            ).show()
-            Log.e("PDF locatioj", file.absolutePath)
+                Toast.makeText(
+                    this,
+                    "Receipt saved to $savedPath",
+                    Toast.LENGTH_LONG
+                ).show()
+
+            } catch (e: Exception) {
+                Toast.makeText(
+                    this,
+                    "Failed to save receipt: ${e.message}",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
         }
     }
 
